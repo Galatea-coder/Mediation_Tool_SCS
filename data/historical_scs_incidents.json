@@ -1,0 +1,202 @@
+{
+  "metadata": {
+    "description": "Historical South China Sea incidents (2012-2024) for model calibration and validation",
+    "sources": [
+      "CSIS Asia Maritime Transparency Initiative",
+      "Council on Foreign Relations Timeline",
+      "AMTI Arbitration Tracker",
+      "Academic publications on SCS conflicts"
+    ],
+    "last_updated": "2025-01-06"
+  },
+  "incidents": [
+    {
+      "id": "SCS-2012-01",
+      "date": "2012-04-10",
+      "name": "Scarborough Shoal Standoff Begins",
+      "actors": ["China_CCG", "Philippines_PCG"],
+      "incident_type": "standoff",
+      "severity": 0.75,
+      "escalation_level": 7,
+      "description": "Chinese vessels blocked Philippine Navy from arresting Chinese fishermen",
+      "duration_days": 73,
+      "outcome": "China gained de facto control",
+      "context": {
+        "weather": "calm",
+        "media_visibility": 3,
+        "diplomatic_activity": "high",
+        "agreement_in_place": false
+      }
+    },
+    {
+      "id": "SCS-2014-01",
+      "date": "2014-05-02",
+      "name": "HYSY-981 Oil Rig Crisis",
+      "actors": ["China_Maritime", "Vietnam_Coast_Guard"],
+      "incident_type": "ramming",
+      "severity": 0.85,
+      "escalation_level": 8,
+      "description": "China placed oil rig in disputed waters; Vietnamese vessels rammed by Chinese ships",
+      "duration_days": 77,
+      "outcome": "Rig removed after completing operations; 6 Vietnamese injured",
+      "context": {
+        "weather": "rough",
+        "media_visibility": 3,
+        "diplomatic_activity": "very_high",
+        "agreement_in_place": false
+      }
+    },
+    {
+      "id": "SCS-2016-01",
+      "date": "2016-07-12",
+      "name": "Arbitration Ruling",
+      "actors": ["International_Tribunal", "China", "Philippines"],
+      "incident_type": "legal_ruling",
+      "severity": 0.60,
+      "escalation_level": 6,
+      "description": "UNCLOS tribunal rules in favor of Philippines; China rejects ruling",
+      "duration_days": 1,
+      "outcome": "China continues operations; Philippines gains legal victory",
+      "context": {
+        "weather": "calm",
+        "media_visibility": 3,
+        "diplomatic_activity": "very_high",
+        "agreement_in_place": false
+      }
+    },
+    {
+      "id": "SCS-2019-01",
+      "date": "2019-03-12",
+      "name": "Reed Bank Incident",
+      "actors": ["China_Militia", "Philippines_Fishermen"],
+      "incident_type": "ramming",
+      "severity": 0.80,
+      "escalation_level": 7,
+      "description": "Chinese fishing vessel rammed and sank Philippine fishing boat; 22 Filipino fishermen abandoned at sea",
+      "duration_days": 1,
+      "outcome": "Vietnam rescued fishermen; Philippines protested; incident strain relations",
+      "context": {
+        "weather": "calm",
+        "media_visibility": 3,
+        "diplomatic_activity": "high",
+        "agreement_in_place": false
+      }
+    },
+    {
+      "id": "SCS-2021-01",
+      "date": "2021-03-07",
+      "name": "Whitsun Reef Militia Swarm",
+      "actors": ["China_Militia", "Philippines_PCG"],
+      "incident_type": "presence_operation",
+      "severity": 0.65,
+      "escalation_level": 6,
+      "description": "220 Chinese militia vessels assembled at Whitsun Reef in Philippines EEZ",
+      "duration_days": 45,
+      "outcome": "Most vessels dispersed after diplomatic protests; some remained",
+      "context": {
+        "weather": "calm",
+        "media_visibility": 3,
+        "diplomatic_activity": "high",
+        "agreement_in_place": false
+      }
+    },
+    {
+      "id": "SCS-2023-01",
+      "date": "2023-02-06",
+      "name": "Second Thomas Shoal Laser Incident",
+      "actors": ["China_CCG", "Philippines_PCG"],
+      "incident_type": "water_cannon",
+      "severity": 0.55,
+      "escalation_level": 5,
+      "description": "Chinese Coast Guard used military-grade laser against Philippine vessel conducting resupply",
+      "duration_days": 1,
+      "outcome": "Temporary blinding of Filipino crew; Philippines filed protest",
+      "context": {
+        "weather": "calm",
+        "media_visibility": 2,
+        "diplomatic_activity": "moderate",
+        "agreement_in_place": false
+      }
+    },
+    {
+      "id": "SCS-2023-02",
+      "date": "2023-08-05",
+      "name": "Ayungin Shoal Blockade",
+      "actors": ["China_CCG", "Philippines_Navy"],
+      "incident_type": "blockade",
+      "severity": 0.70,
+      "escalation_level": 7,
+      "description": "Chinese Coast Guard blocked Philippine Navy resupply mission to BRP Sierra Madre",
+      "duration_days": 3,
+      "outcome": "Mission delayed; eventual resupply after negotiations",
+      "context": {
+        "weather": "calm",
+        "media_visibility": 2,
+        "diplomatic_activity": "high",
+        "agreement_in_place": false
+      }
+    },
+    {
+      "id": "SCS-2024-01",
+      "date": "2024-03-05",
+      "name": "Second Thomas Shoal Water Cannon Attack",
+      "actors": ["China_CCG", "Philippines_Coast_Guard"],
+      "incident_type": "water_cannon",
+      "severity": 0.60,
+      "escalation_level": 6,
+      "description": "Chinese vessels used water cannons against Philippine boats during resupply mission",
+      "duration_days": 1,
+      "outcome": "Four Filipino sailors injured; Philippines summoned Chinese ambassador",
+      "context": {
+        "weather": "calm",
+        "media_visibility": 2,
+        "diplomatic_activity": "high",
+        "agreement_in_place": false
+      }
+    },
+    {
+      "id": "SCS-2024-02",
+      "date": "2024-06-17",
+      "name": "Ayungin Shoal Collision",
+      "actors": ["China_CCG", "Philippines_Navy"],
+      "incident_type": "ramming",
+      "severity": 0.75,
+      "escalation_level": 7,
+      "description": "Chinese Coast Guard rammed Philippine Navy inflatable boat; sailor lost thumb in incident",
+      "duration_days": 1,
+      "outcome": "Serious injury; Philippines considering invoking MDT with US",
+      "context": {
+        "weather": "calm",
+        "media_visibility": 3,
+        "diplomatic_activity": "very_high",
+        "agreement_in_place": false
+      }
+    }
+  ],
+  "aggregate_statistics": {
+    "total_incidents": 9,
+    "period": "2012-2024",
+    "average_severity": 0.694,
+    "escalation_levels": {
+      "level_5": 1,
+      "level_6": 3,
+      "level_7": 4,
+      "level_8": 1
+    },
+    "incident_types": {
+      "ramming": 3,
+      "water_cannon": 2,
+      "blockade": 1,
+      "standoff": 1,
+      "presence_operation": 1,
+      "legal_ruling": 1
+    },
+    "actor_involvement": {
+      "China_CCG": 5,
+      "China_Militia": 2,
+      "Philippines_PCG": 5,
+      "Philippines_Navy": 3,
+      "Vietnam_Coast_Guard": 1
+    }
+  }
+}
