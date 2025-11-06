@@ -7,7 +7,6 @@ Redesigned for optimal usability and clear workflow
 import streamlit as st
 import json
 import os
-import requests
 import pandas as pd
 from typing import Optional, Dict, List
 from dotenv import load_dotenv
@@ -25,8 +24,9 @@ from scs_mediator_sdk.peacebuilding.spoiler_management import SpoilerManager, cr
 # AI Guide Module
 from scs_mediator_sdk.ai_guide import create_instructor_guide, create_participant_guide
 
-# Configuration
-API_URL = os.environ.get("SCS_API_URL", "http://localhost:8000")
+# Bargaining and Simulation Engines (no API server needed!)
+from scs_mediator_sdk.engines.bargaining_engine import BargainingSession, AgreementVector
+from scs_mediator_sdk.sim.mesa_abm import MaritimeModel
 
 # ==================== SCENARIO CONFIGURATIONS ====================
 
@@ -149,6 +149,10 @@ def init_session_state():
     if 'anthropic_api_key' not in st.session_state:
         # Try to get from environment first (for backward compatibility)
         st.session_state.anthropic_api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+
+    # Bargaining session storage (replaces API server sessions)
+    if 'bargaining_sessions' not in st.session_state:
+        st.session_state.bargaining_sessions = {}
 
 # ==================== ROLE SELECTION ====================
 
@@ -488,9 +492,17 @@ def instructor_console():
 
         if st.button("▶️ Start Session", type="primary", use_container_width=True):
             case_id = case.get("id", "demo_case")
-            payload = {"case_id": case_id, "parties": parties, "mediator": mediator, "issue_space": issue_space}
             try:
-                r = requests.post(f"{API_URL}/bargain/sessions", json=payload, timeout=30)
+                # Create bargaining session directly (no API server needed)
+                session = BargainingSession.start(
+                    case_id=case_id,
+                    parties=parties,
+                    mediator=mediator,
+                    issue_space=issue_space,
+                    priors=None,
+                    max_rounds=12
+                )
+                st.session_state.bargaining_sessions[case_id] = session
                 st.session_state.session_id = case_id
                 st.session_state.selected_issues = issue_space  # Store for Step 2
                 st.session_state.workflow_step = 2
@@ -716,13 +728,14 @@ def instructor_console():
             if st.button("🔍 Calculate Utilities & Acceptance Probabilities", type="primary", use_container_width=True):
                 try:
                     case_id = st.session_state.session_id or "demo_case"
-                    payload = {
-                        "proposer_party_id": "PH_GOV",
-                        "agreement_vector": st.session_state.current_offer
-                    }
-                    r = requests.post(f"{API_URL}/bargain/{case_id}/offer", json=payload, timeout=60)
-                    result = r.json()
-                    st.session_state.last_evaluation = result
+                    # Evaluate offer directly using bargaining session (no API needed)
+                    session = st.session_state.bargaining_sessions.get(case_id)
+                    if not session:
+                        st.error("❌ Session not found. Please start a new session in Step 1.")
+                    else:
+                        av = AgreementVector(st.session_state.current_offer)
+                        result = session.evaluate_offer("PH_GOV", av)
+                        st.session_state.last_evaluation = result
 
                 except Exception as e:
                     st.error(f"❌ Evaluation failed: {e}")
@@ -871,13 +884,30 @@ def instructor_console():
             if st.button("▶️ Run Simulation", type="primary", use_container_width=True):
                 with st.spinner("Running simulation..."):
                     try:
-                        sim_payload = {
-                            "steps": steps,
-                            "environment": {"weather_state": "calm", "media_visibility": 2},
-                            "agreement_vector": st.session_state.current_offer
-                        }
-                        r = requests.post(f"{API_URL}/sim/run", json=sim_payload, timeout=120)
-                        sim_results = r.json()
+                        # Run simulation directly (no API server needed)
+                        model = MaritimeModel(
+                            steps=steps,
+                            environment={"weather_state": "calm", "media_visibility": 2},
+                            agreement=st.session_state.current_offer,
+                            seed=None
+                        )
+                        df = model.run()
+
+                        # Format results like API response
+                        if df.empty:
+                            sim_results = {
+                                "summary": {"incidents": 0, "max_severity": 0},
+                                "events": []
+                            }
+                        else:
+                            sim_results = {
+                                "summary": {
+                                    "incidents": int(len(df)),
+                                    "max_severity": float(df["severity"].max())
+                                },
+                                "events": df.to_dict(orient="records")
+                            }
+
                         st.session_state.simulation_results = sim_results
                         st.session_state.workflow_step = 5
                         st.rerun()
@@ -1990,15 +2020,18 @@ def party_view():
             if st.button("🔍 Calculate My Utility", type="primary"):
                 try:
                     case_id = st.session_state.session_id or "demo_case"
-                    payload = {
-                        "proposer_party_id": party_id,
-                        "agreement_vector": st.session_state.current_offer
-                    }
-                    r = requests.post(f"{API_URL}/bargain/{case_id}/offer", json=payload, timeout=30)
-                    result = r.json()
+                    # Evaluate offer directly using bargaining session (no API needed)
+                    session = st.session_state.bargaining_sessions.get(case_id)
+                    if not session:
+                        st.error("❌ Session not found. Please ask the instructor to start a new session.")
+                        result = None
+                    else:
+                        av = AgreementVector(st.session_state.current_offer)
+                        result = session.evaluate_offer(party_id, av)
 
-                    my_utility = result['utilities'].get(party_id, 0)
-                    my_acceptance = result['acceptance_prob'].get(party_id, 0)
+                    if result:
+                        my_utility = result['utilities'].get(party_id, 0)
+                        my_acceptance = result['acceptance_prob'].get(party_id, 0)
 
                     col1, col2 = st.columns(2)
                     with col1:
@@ -2060,11 +2093,15 @@ def party_view():
             if st.button("🔍 Preview My Utility", type="secondary", use_container_width=True):
                 try:
                     case_id = st.session_state.session_id or "demo_case"
-                    payload = {"proposer_party_id": party_id, "agreement_vector": offer}
-                    r = requests.post(f"{API_URL}/bargain/{case_id}/offer", json=payload, timeout=30)
-                    result = r.json()
-                    my_utility = result['utilities'].get(party_id, 0)
-                    st.info(f"Your utility from this offer: **{my_utility:.1%}**")
+                    # Evaluate offer directly using bargaining session (no API needed)
+                    session = st.session_state.bargaining_sessions.get(case_id)
+                    if not session:
+                        st.error("❌ Session not found. Please ask the instructor to start a new session.")
+                    else:
+                        av = AgreementVector(offer)
+                        result = session.evaluate_offer(party_id, av)
+                        my_utility = result['utilities'].get(party_id, 0)
+                        st.info(f"Your utility from this offer: **{my_utility:.1%}**")
                 except Exception as e:
                     st.error(f"Preview failed: {e}")
 
