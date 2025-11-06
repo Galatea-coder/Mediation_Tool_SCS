@@ -3,9 +3,8 @@ from dataclasses import dataclass
 from typing import Dict, Any, List
 import random
 import pandas as pd
-from mesa import Model
+from mesa import Model, Agent
 from mesa.time import RandomActivation
-from mesa.agent import Agent
 
 class MaritimeAgent(Agent):
     def __init__(self, unique_id, model, kind:str):
