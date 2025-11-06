@@ -1,0 +1,33 @@
+{
+  "legal_baseline": {
+    "uncos_pca_2016_compliance": 1.0
+  },
+  "safety_protocols": {
+    "cues_active": true,
+    "colregs_active": true,
+    "hotline_status": "ad_hoc"
+  },
+  "seasons": {
+    "fishing_peak_active": false
+  },
+  "weather_state": "rough",
+  "media_visibility": 2,
+  "id": "scs_second_thomas_2025Q1",
+  "flashpoint": "Second Thomas Shoal",
+  "focus": "resupply",
+  "manual_source": "/home/dk/scs_mediator_sdk/SCS_Training_Manuals/Manual_A_Second_Thomas.docx",
+  "scenario_info": {
+    "name": "Manual_A_Second_Thomas",
+    "description": "",
+    "parties": [],
+    "interests": {},
+    "positions": {},
+    "context": {},
+    "issues": [],
+    "background": "Historical & Geopolitical Context Second Thomas Shoal is sustained by periodic resupply to BRP Sierra Madre, making small-craft transfers sensitive to sea state and proximity. Incident patterns since 2024 show water-cannon usage, ramming/sideswipes, and interference near RHIB handoffs. Allied presence and media embeds increase visibility and time pressure. Stakeholder Landscape PH: PCG, AFP-WESCOM, NTF-WPS; fisher orgs; domestic political actors. PRC: CCG frontline, maritime militia swarms, PLAN overwatch; provincial maritime authorities. Legal & Normative Frameworks UNCLOS baseline: EEZ rights (Art. 56), enforcement (Art. 73). 2016 PCA Award: invalidates historic rights claims beyond UNCLOS entitlements. Operational norms: COLREGS (1972) and CUES (2014) to avoid collisions and miscalculation. Domestic overlays: detention powers, inspection procedures, and water-cannon usage policies. Drafting constraints: always include 'no prejudice to sovereignty' and humanitarian MEDEVAC carve-outs. Operational Environment Operational constraints: standoff distances, escort caps, RHIB box, weather windows (NE monsoon). Info discipline: AIS and video always on; agreed playback/exchange post-incident. De-confliction: hotline standard operating procedures and 48h JFF. Scenario Walk-Through & Decision Points Day 0\u20131: pre-notification; weather forecast; convoy composition review. Day 2: approach and standoff; potential shadowing; activate hotline. Day 3: RHIB transfer; camera/AIS logging; de-escalation if water cannon observed. Day 4: post-incident JFF and media protocol (6h embargo). Mediation Toolkit & SDK Usage Offer vector knobs: standoff_nm, escort_count, pre_notification_hours, hotline_status, embargo_hours. Interpret utilities vs acceptance; if below threshold, add verification/observers. Run sim to check incident frequency under current package; iterate. Clause Library (Copy-Ready Text) At-Sea Conduct (CUES-plus): distances, speeds, lighting, AIS/video on. Resupply SOP: \u22653 nm standoff, escort \u22641, prenotification 6\u201312h, RHIB box \u22641 nm radius. MEDEVAC pledge, JFF 48h, media embargo 6h, no prejudice to sovereignty. Monitoring, Verification & Dashboards Indicators: incidents/resupply, injuries, minutes-to-hotline, JFF closure time. Dashboards: incident histogram, timeline, and compliance scorecards. Reflection & Training Exercises Design a resupply SOP under rough-sea conditions. Negotiate a hotline upgrade from ad_hoc to 24/7 with verification exchange. Draft a media protocol that balances transparency and de-escalation. What standoff distance meaningfully reduces RHIB risk without ceding face? Which verification elements are feasible without implying adjudication? How does media latency change domestic pressure? Glossary & Acronyms EEZ \u2014 Exclusive Economic Zone; 200 nm from baselines. CUES \u2014 Code for Unplanned Encounters at Sea; confidence-building seamanship protocol. COLREGS \u2014 International Regulations for Preventing Collisions at Sea. PAFMM \u2014 People\u2019s Armed Forces Maritime Militia. RHIB \u2014 Rigid-hull inflatable boat. BATNA \u2014 Best Alternative To a Negotiated Agreement. JFF \u2014 Joint Fact-Finding; rapid, time-bound evidence process. AIS \u2014 Automatic Identification System; tracking & collision avoidance. Annex: Data Sources & Further Reading Data pointers: ACLED (event-level), UCDP GED (conflict events), PA-X (peace agreements), PAM (monitoring provisions). Open satellite sources: Sentinel-1/2 (EO/SAR) via Copernicus; AIS public aggregators. Suggested practitioner reading lists and technical standards (COLREGS, CUES). ",
+    "learning_objectives": []
+  },
+  "manual_text_excerpt": "Training Manual \u2014 Second Thomas (Ayungin) Resupply\n\nPrepared for: Mediators & Instructor Teams\n\nDate: 2025-11-03\n\nQuick-Start Checklist (SDK + Console)\n\nInstall the SDK locally: pip install -e .[dev]\n\nStart the API: uvicorn scs_mediator_sdk.api.server:app --reload\n\nStart the Instructor Console: export SCS_API_URL=http://localhost:8000; streamlit run src/scs_mediator_sdk/ui/streamlit_app.py\n\nLoad the scenario JSON from cases/scs in the sidebar.\n\nAdjust parties, priors, and issue space as per the scenario brief.\n\nCompose an offer (Resupply SOP / Hotline / Media) and click Evaluate Offer.\n\nOpen the 'Run Simulation' tab (if enabled) to generate an incident histogram.\n\nUse the Reflection prompts to debrief and iterate.\n\nHistorical & Geopolitical Context\n\nSecond Thomas Shoal is sustained by periodic resupply to BRP Sierra Madre, making small-craft transfers sensitive to sea state and proximity.\n\nIncident patterns since 2024 show water-cannon usage, ramming/sideswipes, and interference near R...",
+  "enhanced_version": "9.0",
+  "training_mode": true
+}

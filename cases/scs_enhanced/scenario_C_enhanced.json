@@ -1,0 +1,33 @@
+{
+  "legal_baseline": {
+    "uncos_pca_2016_compliance": 1.0
+  },
+  "safety_protocols": {
+    "cues_active": true,
+    "colregs_active": true,
+    "hotline_status": "ad_hoc"
+  },
+  "seasons": {
+    "fishing_peak_active": false
+  },
+  "weather_state": "calm",
+  "media_visibility": 2,
+  "id": "scs_kasawari_2025Q1",
+  "flashpoint": "Kasawari/Luconia",
+  "focus": "energy_moratorium",
+  "manual_source": "/home/dk/scs_mediator_sdk/SCS_Training_Manuals/Manual_C_Kasawari.docx",
+  "scenario_info": {
+    "name": "Manual_C_Kasawari",
+    "description": "",
+    "parties": [],
+    "interests": {},
+    "positions": {},
+    "context": {},
+    "issues": [],
+    "background": "Historical & Geopolitical Context Kasawari/Luconia involves energy platform operations near contested patrol arcs. Shadowing and survey interference create safety and schedule risks. Malaysia balances revenue stability with quiet diplomacy and legalism. Stakeholder Landscape Domestic constituencies expect continuity of operations and calm. Legal & Normative Frameworks UNCLOS baseline: EEZ rights (Art. 56), enforcement (Art. 73). 2016 PCA Award: invalidates historic rights claims beyond UNCLOS entitlements. Operational norms: COLREGS (1972) and CUES (2014) to avoid collisions and miscalculation. Domestic overlays: detention powers, inspection procedures, and water-cannon usage policies. Drafting constraints: always include 'no prejudice to sovereignty' and humanitarian MEDEVAC carve-outs. Platform safety zones; environmental survey norms; dual-text statements for face. Operational Environment Approach thresholds (e.g., <3 nm) as triggers; AIS discipline near platforms; SAR readiness. Weather routing and maintenance windows; tug and support craft safety. Scenario Walk-Through & Decision Points Day 0: announce moratorium bounds; establish technical committee and AIS transparency near platforms. Day 10: neutral environmental survey commences; publish milestone plan. Day 30+: review against milestones and adjust scope. Mediation Toolkit & SDK Usage Offer vector knobs: duration_months, revenue_neutrality, AIS transparency level. Integrate dual-text communiqu\u00e9 to reduce face costs. Clause Library (Copy-Ready Text) Moratorium coordinates and exemptions; technical committee milestones; monthly AIS map publication. No-prejudice language; maintenance carve-outs. Monitoring, Verification & Dashboards Indicators: approaches <3 nm, incident count, milestone on-time %. Dashboards: approach-distance trend lines, milestone tracker. Reflection & Training Exercises Draw moratorium bounds that reduce risk without halting critical work. Design an AIS transparency protocol that protects sensitive data. How long should a moratorium last to be credible? ",
+    "learning_objectives": []
+  },
+  "manual_text_excerpt": "Training Manual \u2014 Kasawari/Luconia Energy Moratorium\n\nPrepared for: Mediators & Instructor Teams\n\nDate: 2025-11-03\n\nQuick-Start Checklist (SDK + Console)\n\nInstall the SDK locally: pip install -e .[dev]\n\nStart the API: uvicorn scs_mediator_sdk.api.server:app --reload\n\nStart the Instructor Console: export SCS_API_URL=http://localhost:8000; streamlit run src/scs_mediator_sdk/ui/streamlit_app.py\n\nLoad the scenario JSON from cases/scs in the sidebar.\n\nAdjust parties, priors, and issue space as per the scenario brief.\n\nCompose an offer (Resupply SOP / Hotline / Media) and click Evaluate Offer.\n\nOpen the 'Run Simulation' tab (if enabled) to generate an incident histogram.\n\nUse the Reflection prompts to debrief and iterate.\n\nHistorical & Geopolitical Context\n\nKasawari/Luconia involves energy platform operations near contested patrol arcs.\n\nShadowing and survey interference create safety and schedule risks.\n\nMalaysia balances revenue stability with quiet diplomacy and legalism.\n\nStakeholder Lan...",
+  "enhanced_version": "9.0",
+  "training_mode": true
+}

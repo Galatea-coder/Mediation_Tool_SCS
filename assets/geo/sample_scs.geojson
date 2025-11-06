@@ -1,0 +1,74 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Approx_EEZ_Line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            110,
+            3
+          ],
+          [
+            115,
+            6
+          ],
+          [
+            120,
+            8
+          ],
+          [
+            122,
+            12
+          ],
+          [
+            118,
+            15
+          ],
+          [
+            112,
+            13
+          ],
+          [
+            110,
+            10
+          ],
+          [
+            110,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Scarborough"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.75,
+          15.12
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Second_Thomas"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.85,
+          10.65
+        ]
+      }
+    }
+  ]
+}

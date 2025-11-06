@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    container_name: scs_api
+    ports: ["8000:8000"]
+    volumes:
+      - ./cases:/app/cases:ro
+      - ./assets:/app/assets:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options: { max-size: "10m", max-file: "3" }
+    profiles: ["dev","prod"]
+
+  instructor:
+    build: .
+    container_name: scs_instructor
+    environment: [ "SCS_API_URL=http://scs_api:8000" ]
+    command: streamlit run src/scs_mediator_sdk/ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+    ports: ["8501:8501"]
+    volumes:
+      - ./cases:/app/cases:ro
+      - ./assets:/app/assets:ro
+    depends_on:
+      api:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options: { max-size: "10m", max-file: "3" }
+    profiles: ["dev","prod"]

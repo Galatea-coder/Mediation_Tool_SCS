@@ -1,0 +1,33 @@
+{
+  "legal_baseline": {
+    "uncos_pca_2016_compliance": 1.0
+  },
+  "safety_protocols": {
+    "cues_active": true,
+    "colregs_active": true,
+    "hotline_status": "ad_hoc"
+  },
+  "seasons": {
+    "fishing_peak_active": true
+  },
+  "weather_state": "calm",
+  "media_visibility": 2,
+  "id": "scs_scarborough_2025Q1",
+  "flashpoint": "Scarborough Shoal",
+  "focus": "fisheries",
+  "manual_source": "/home/dk/scs_mediator_sdk/SCS_Training_Manuals/Manual_B_Scarborough.docx",
+  "scenario_info": {
+    "name": "Manual_B_Scarborough",
+    "description": "",
+    "parties": [],
+    "interests": {},
+    "positions": {},
+    "context": {},
+    "issues": [],
+    "background": "Historical & Geopolitical Context Scarborough Shoal is a key fishery; seasonal peaks create contact density with patrols and militia swarms. Patterns include rope-boom use, sideswipes, water cannon, gear confiscation allegations. Humanitarian and livelihood stakes increase the reputational cost of coercion. Stakeholder Landscape Local fishers (Zambales/Pangasinan), cooperatives, lenders; PCG units; PRC CCG/PAFMM. Legal & Normative Frameworks UNCLOS baseline: EEZ rights (Art. 56), enforcement (Art. 73). 2016 PCA Award: invalidates historic rights claims beyond UNCLOS entitlements. Operational norms: COLREGS (1972) and CUES (2014) to avoid collisions and miscalculation. Domestic overlays: detention powers, inspection procedures, and water-cannon usage policies. Drafting constraints: always include 'no prejudice to sovereignty' and humanitarian MEDEVAC carve-outs. Status-neutral corridor text; proportionality and non-lethal inspection standards. Operational Environment Corridor geometry: 1\u20133 nm lane width; lighting and speed rules; observers with EO cameras. Weather and seasonality calendar; media visibility practices. Scenario Walk-Through & Decision Points Day 0: observer scheme announced; hotline test; lane coordinates published. Day 3: first peak-contact day; monitor AIS compliance; respond to rumor with data. Day 7: mid-course review; adjust lane width or observer rotation. Mediation Toolkit & SDK Usage Offer vector knobs: lane_width_nm, observer_scheme, no_water_cannon, media protocols. Compensation fund triggers for temporary restrictions; debrief and iterate. Clause Library (Copy-Ready Text) Seasonal fisheries corridor with AIS-verified lanes; observer immunity; no water cannon clause. Hotline routing, dispute board (48h), and periodic review terms. Monitoring, Verification & Dashboards Indicators: catch volume vs baseline, harassment incidents, detention count. Dashboards: lane compliance heat map, observer report log, hotline uptime. Reflection & Training Exercises Calibrate a corridor that balances access and safety. Design an observer rotation that reduces harassment risk. Draft proportional inspection standards. How wide should the corridor be under high-swarm risk? Which observer model (NGO vs bilateral) best reduces misreporting? When should compensation be offered without moral hazard? Glossary & Acronyms EEZ \u2014 Exclusive Economic Zone; 200 nm from baselines. CUES \u2014 Code for Unplanned Encounters at Sea; confidence-building seamanship protocol. COLREGS \u2014 International Regulations for Preventing Collisions at Sea. PAFMM \u2014 People\u2019s Armed Forces Maritime Militia. RHIB \u2014 Rigid-hull inflatable boat. BATNA \u2014 Best Alternative To a Negotiated Agreement. JFF \u2014 Joint Fact-Finding; rapid, time-bound evidence process. AIS \u2014 Automatic Identification System; tracking & collision avoidance. Annex: Data Sources & Further Reading Data pointers: ACLED (event-level), UCDP GED (conflict events), PA-X (peace agreements), PAM (monitoring provisions). Open satellite sources: Sentinel-1/2 (EO/SAR) via Copernicus; AIS public aggregators. Suggested practitioner reading lists and technical standards (COLREGS, CUES). ",
+    "learning_objectives": []
+  },
+  "manual_text_excerpt": "Training Manual \u2014 Scarborough Fisheries Corridor\n\nPrepared for: Mediators & Instructor Teams\n\nDate: 2025-11-03\n\nQuick-Start Checklist (SDK + Console)\n\nInstall the SDK locally: pip install -e .[dev]\n\nStart the API: uvicorn scs_mediator_sdk.api.server:app --reload\n\nStart the Instructor Console: export SCS_API_URL=http://localhost:8000; streamlit run src/scs_mediator_sdk/ui/streamlit_app.py\n\nLoad the scenario JSON from cases/scs in the sidebar.\n\nAdjust parties, priors, and issue space as per the scenario brief.\n\nCompose an offer (Resupply SOP / Hotline / Media) and click Evaluate Offer.\n\nOpen the 'Run Simulation' tab (if enabled) to generate an incident histogram.\n\nUse the Reflection prompts to debrief and iterate.\n\nHistorical & Geopolitical Context\n\nScarborough Shoal is a key fishery; seasonal peaks create contact density with patrols and militia swarms.\n\nPatterns include rope-boom use, sideswipes, water cannon, gear confiscation allegations.\n\nHumanitarian and livelihood stakes increase ...",
+  "enhanced_version": "9.0",
+  "training_mode": true
+}

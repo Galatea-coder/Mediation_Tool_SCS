@@ -1,0 +1,33 @@
+{
+  "legal_baseline": {
+    "uncos_pca_2016_compliance": 1.0
+  },
+  "safety_protocols": {
+    "cues_active": true,
+    "colregs_active": true,
+    "hotline_status": "ad_hoc"
+  },
+  "seasons": {
+    "fishing_peak_active": false
+  },
+  "weather_state": "calm",
+  "media_visibility": 2,
+  "id": "scs_natuna_2025Q1",
+  "flashpoint": "North Natuna Sea",
+  "focus": "shared_patrols",
+  "manual_source": "/home/dk/scs_mediator_sdk/SCS_Training_Manuals/Manual_D_Natuna.docx",
+  "scenario_info": {
+    "name": "Manual_D_Natuna",
+    "description": "",
+    "parties": [],
+    "interests": {},
+    "positions": {},
+    "context": {},
+    "issues": [],
+    "background": "Historical & Geopolitical Context Indonesia enforces an UNCLOS EEZ near Natuna; PRC references traditional fishing grounds. Recurring incursions during peak seasons; detention spirals are the main escalation vector. Stakeholder Landscape Domestic legalists resist 'dispute' framing; preference for legal dialogue. Legal & Normative Frameworks UNCLOS baseline: EEZ rights (Art. 56), enforcement (Art. 73). 2016 PCA Award: invalidates historic rights claims beyond UNCLOS entitlements. Operational norms: COLREGS (1972) and CUES (2014) to avoid collisions and miscalculation. Domestic overlays: detention powers, inspection procedures, and water-cannon usage policies. Drafting constraints: always include 'no prejudice to sovereignty' and humanitarian MEDEVAC carve-outs. Detention notification norms and quick-release practices; mini-COC pilot zones. Operational Environment Shared patrol boxes; VHF/Hotline protocols; observer exchanges during fisheries peaks. Weather and visibility; AIS spoofing counter-measures. Scenario Walk-Through & Decision Points Day 0: publish patrol schedule; activate hotline; agree detention notification template. Day 5: observed incursion; use observer exchange; prepare joint release if detention occurs. Mediation Toolkit & SDK Usage Offer vector knobs: patrol calendar publication, detention notification SLA, observer exchange scope. Clause Library (Copy-Ready Text) Patrol schedule publication; detention notification timelines; joint release mechanism; safe lanes for fishers. Monitoring, Verification & Dashboards Indicators: detentions, incident rate, hotline drills pass rate, catch normalization. Reflection & Training Exercises Draft a mini-COC pilot for Natuna that avoids 'dispute' framing. What transparency measures reduce misreporting without revealing tactics? Glossary & Acronyms EEZ \u2014 Exclusive Economic Zone; 200 nm from baselines. CUES \u2014 Code for Unplanned Encounters at Sea; confidence-building seamanship protocol. COLREGS \u2014 International Regulations for Preventing Collisions at Sea. PAFMM \u2014 People\u2019s Armed Forces Maritime Militia. RHIB \u2014 Rigid-hull inflatable boat. BATNA \u2014 Best Alternative To a Negotiated Agreement. JFF \u2014 Joint Fact-Finding; rapid, time-bound evidence process. AIS \u2014 Automatic Identification System; tracking & collision avoidance. Annex: Data Sources & Further Reading Data pointers: ACLED (event-level), UCDP GED (conflict events), PA-X (peace agreements), PAM (monitoring provisions). Open satellite sources: Sentinel-1/2 (EO/SAR) via Copernicus; AIS public aggregators. Suggested practitioner reading lists and technical standards (COLREGS, CUES). ",
+    "learning_objectives": []
+  },
+  "manual_text_excerpt": "Training Manual \u2014 North Natuna Shared Patrols\n\nPrepared for: Mediators & Instructor Teams\n\nDate: 2025-11-03\n\nQuick-Start Checklist (SDK + Console)\n\nInstall the SDK locally: pip install -e .[dev]\n\nStart the API: uvicorn scs_mediator_sdk.api.server:app --reload\n\nStart the Instructor Console: export SCS_API_URL=http://localhost:8000; streamlit run src/scs_mediator_sdk/ui/streamlit_app.py\n\nLoad the scenario JSON from cases/scs in the sidebar.\n\nAdjust parties, priors, and issue space as per the scenario brief.\n\nCompose an offer (Resupply SOP / Hotline / Media) and click Evaluate Offer.\n\nOpen the 'Run Simulation' tab (if enabled) to generate an incident histogram.\n\nUse the Reflection prompts to debrief and iterate.\n\nHistorical & Geopolitical Context\n\nIndonesia enforces an UNCLOS EEZ near Natuna; PRC references traditional fishing grounds.\n\nRecurring incursions during peak seasons; detention spirals are the main escalation vector.\n\nStakeholder Landscape\n\nIndonesia: MFA, Bakamla, TNI-AL, local...",
+  "enhanced_version": "9.0",
+  "training_mode": true
+}
