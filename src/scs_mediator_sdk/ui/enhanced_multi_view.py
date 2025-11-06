@@ -145,6 +145,11 @@ def init_session_state():
             "MY_CG": StrategicContext()
         }
 
+    # API key configuration for AI features
+    if 'anthropic_api_key' not in st.session_state:
+        # Try to get from environment first (for backward compatibility)
+        st.session_state.anthropic_api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+
 # ==================== ROLE SELECTION ====================
 
 def role_selection_page():
@@ -278,6 +283,7 @@ def instructor_console():
                 try:
                     # Create guide with unique session ID for instructors
                     st.session_state.ai_guide = create_instructor_guide(
+                        api_key=st.session_state.anthropic_api_key or None,
                         session_id="instructor",
                         enable_persistence=True
                     )
@@ -1838,6 +1844,7 @@ def party_view():
                     # Create guide with unique session ID per party
                     participant_session_id = f"participant_{party_id}"
                     st.session_state.participant_ai_guide = create_participant_guide(
+                        api_key=st.session_state.anthropic_api_key or None,
                         session_id=participant_session_id,
                         enable_persistence=True
                     )
@@ -2413,6 +2420,40 @@ def main():
     """, unsafe_allow_html=True)
 
     init_session_state()
+
+    # API key configuration in sidebar (available across all views)
+    with st.sidebar:
+        with st.expander("⚙️ AI Configuration", expanded=False):
+            st.markdown("### API Key Setup")
+            st.markdown("Enter your Anthropic API key to enable AI-powered features:")
+            st.markdown("- AI Guide assistance")
+            st.markdown("- LLM-enhanced escalation assessment")
+
+            # API key input
+            api_key_input = st.text_input(
+                "Anthropic API Key",
+                value=st.session_state.anthropic_api_key,
+                type="password",
+                help="Get your API key from https://console.anthropic.com/",
+                key="api_key_input_widget"
+            )
+
+            # Update session state and environment when key changes
+            if api_key_input != st.session_state.anthropic_api_key:
+                st.session_state.anthropic_api_key = api_key_input
+                if api_key_input:
+                    os.environ["ANTHROPIC_API_KEY"] = api_key_input
+                    st.success("✓ API key configured!")
+                else:
+                    if "ANTHROPIC_API_KEY" in os.environ:
+                        del os.environ["ANTHROPIC_API_KEY"]
+                    st.info("ℹ️ AI features will be disabled without an API key")
+
+            # Status indicator
+            if st.session_state.anthropic_api_key:
+                st.success("🟢 AI features enabled")
+            else:
+                st.warning("🟡 AI features disabled")
 
     # Route to appropriate view
     if st.session_state.user_role is None:
