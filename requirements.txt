@@ -1,0 +1,32 @@
+# SCS Mediator SDK - Dependencies for Streamlit Cloud Deployment
+# Generated from pyproject.toml
+
+# Core framework
+fastapi>=0.115.0
+uvicorn>=0.30.0
+pydantic>=2.6.0
+pydantic-settings>=2.3.0
+
+# Simulation and modeling
+mesa>=2.2.0
+numpy>=1.26.0
+pandas>=2.2.0
+networkx>=3.2.0
+
+# UI and visualization
+streamlit>=1.36.0
+plotly>=5.18.0
+matplotlib>=3.8.0
+
+# Data handling
+orjson>=3.10.0
+python-multipart>=0.0.9
+httpx>=0.27.0
+pyyaml>=6.0.0
+python-dotenv>=1.0.0
+
+# AI/LLM support
+anthropic>=0.18.0
+
+# Scientific computing
+scipy>=1.11.0
