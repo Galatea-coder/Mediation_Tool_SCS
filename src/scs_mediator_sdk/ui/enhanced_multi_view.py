@@ -7,9 +7,17 @@ Redesigned for optimal usability and clear workflow
 import streamlit as st
 import json
 import os
+import sys
 import pandas as pd
 from typing import Optional, Dict, List
+from pathlib import Path
 from dotenv import load_dotenv
+
+# Ensure package can be imported (for Streamlit Cloud deployment)
+# Add src directory to Python path so scs_mediator_sdk can be imported
+src_dir = Path(__file__).parent.parent.parent
+if str(src_dir) not in sys.path:
+    sys.path.insert(0, str(src_dir))
 
 # Load environment variables from .env file
 load_dotenv()
