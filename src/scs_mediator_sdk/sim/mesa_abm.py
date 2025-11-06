@@ -3,8 +3,19 @@ from dataclasses import dataclass
 from typing import Dict, Any, List
 import random
 import pandas as pd
-from mesa import Model, Agent
-from mesa.time import RandomActivation
+
+# Handle Mesa 1.x and 2.x compatibility
+try:
+    from mesa import Model, Agent
+    from mesa.time import RandomActivation
+except (ImportError, AttributeError):
+    # Fallback for older Mesa versions
+    try:
+        from mesa import Model
+        from mesa.agent import Agent
+        from mesa.time import RandomActivation
+    except ImportError:
+        raise ImportError("Mesa library not installed or incompatible version. Please install: pip install mesa>=2.2.0")
 
 class MaritimeAgent(Agent):
     def __init__(self, unique_id, model, kind:str):
