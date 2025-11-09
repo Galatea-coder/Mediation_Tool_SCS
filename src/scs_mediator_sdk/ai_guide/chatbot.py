@@ -201,6 +201,39 @@ Your role:
 - Offer pedagogical advice for training scenarios
 - Troubleshoot technical issues with the simulation
 
+CRITICAL PARAMETER ALIGNMENT REQUIREMENT:
+When providing recommendations, you MUST clearly distinguish between:
+
+1. **PRIMARY RECOMMENDATIONS** (aligned with simulation parameters):
+   - Focus on parameters available in the current scenario
+   - Use specific parameter names and ranges (e.g., "standoff_nm: 0-10 nautical miles")
+   - Recommend strategic actions from the available action library
+   - These should be your MAIN guidance - actionable within the simulation
+
+2. **ADDITIONAL CONSIDERATIONS** (theoretical/contextual guidance):
+   - Broader strategic or theoretical insights
+   - Real-world factors not modeled in simulation
+   - Clearly label these as "Additional Considerations" or "Beyond Simulation"
+   - Explain why these matter even if not directly simulated
+
+3. **NOVEL SUGGESTIONS** (beyond current simulation):
+   - If suggesting parameters/actions not in the simulation, explicitly flag them
+   - Use format: "⚠️ NOVEL SUGGESTION (not in current simulation): [suggestion]"
+   - Explain how facilitators might incorporate this (e.g., adjust scenario parameters, add as constraint)
+
+Example response structure:
+"**Primary Recommendation (Simulation Parameters):**
+Adjust standoff_nm to 5 nautical miles (range: 0-10) to balance security with de-escalation.
+
+**Strategic Actions Available:**
+- Execute 'Initiate Track II Dialogue' to build trust
+- Consider 'Increase Transparency' if diplomatic capital ≥30
+
+**Additional Considerations:**
+Historical precedents (Fravel 2008) suggest joint patrols reduce incidents, though this isn't a direct parameter.
+
+⚠️ **Novel Suggestion:** Consider adding a 'joint patrol frequency' parameter in future scenario iterations."
+
 CRITICAL CITATION REQUIREMENT:
 You MUST cite specific academic sources with full details when answering questions. Every theoretical concept or framework you mention MUST include:
 1. Author names and year
@@ -266,6 +299,39 @@ Your role:
 - Provide hints about effective approaches (without revealing optimal solutions)
 - Help participants understand their position and constraints
 - Explain geopolitical and economic considerations
+
+CRITICAL PARAMETER ALIGNMENT REQUIREMENT:
+When providing negotiation guidance, you MUST clearly distinguish between:
+
+1. **PRIMARY RECOMMENDATIONS** (aligned with simulation parameters):
+   - Focus on parameters you can actually negotiate (e.g., "propose standoff_nm of 5-7 nautical miles")
+   - Recommend strategic actions you can execute (e.g., "Execute 'Track II Dialogue' action to build trust")
+   - These are ACTIONABLE within the simulation - your main guidance
+
+2. **ADDITIONAL CONSIDERATIONS** (theoretical/strategic insights):
+   - Broader negotiation theory and strategic thinking
+   - Real-world factors like media perception, alliance dynamics
+   - Clearly label as "Additional Considerations" or "Strategic Context"
+   - Explain relevance even if not directly modeled
+
+3. **ASPIRATIONAL SUGGESTIONS** (beyond current simulation):
+   - If suggesting something outside available parameters/actions, flag it clearly
+   - Use format: "⚠️ ASPIRATIONAL (not in current simulation): [suggestion]"
+   - Explain how to advocate for this with facilitators (e.g., "Ask facilitator to add joint patrol parameter")
+
+Example response structure:
+"**Primary Recommendation (Simulation Actions):**
+Based on your role as Philippines, I recommend:
+- Propose standoff_nm = 5-6 (range: 0-10) to balance security and de-escalation
+- Execute 'Initiate Track II Dialogue' action now (no prerequisites, +10 Diplomatic Capital)
+
+**Negotiation Tactics:**
+Frame this as protecting sovereignty while reducing tension (Fisher & Ury 1981 - principled negotiation).
+
+**Additional Considerations:**
+Putnam's (1988) two-level game theory suggests checking domestic win-set constraints. Your military may resist short distances.
+
+⚠️ **Aspirational:** Consider requesting joint patrol provisions in future rounds (not in current parameters)."
 
 CRITICAL CITATION REQUIREMENT:
 You MUST cite specific academic sources with full details. Every concept or recommendation MUST include author names, year, and key publication details.
@@ -348,7 +414,11 @@ You have access to:
                 "scenario_A_second_thomas.json": "Scenario A: Second Thomas Shoal (Resupply)",
                 "scenario_B_scarborough.json": "Scenario B: Scarborough Shoal (Fishing)",
                 "scenario_C_kasawari.json": "Scenario C: Kasawari Gas Field (Energy)",
-                "scenario_D_natuna.json": "Scenario D: Natuna Islands (EEZ)"
+                "scenario_D_natuna.json": "Scenario D: Natuna Islands (EEZ)",
+                "scenario_A": "Scenario: Resupply Ship Incident (Second Thomas Shoal)",
+                "scenario_B": "Scenario: Fishing Rights Dispute (Scarborough Shoal)",
+                "scenario_C": "Scenario: EEZ Enforcement (Kasawari)",
+                "scenario_D": "Scenario: Seasonal Restrictions"
             }
             context_str += f"- Scenario: {scenario_map.get(self.context['scenario'], self.context['scenario'])}\n"
 
@@ -368,12 +438,45 @@ You have access to:
                 "PH_GOV": "Philippines Government",
                 "PRC_MARITIME": "PRC Maritime Forces",
                 "VN_CG": "Vietnam Coast Guard",
-                "MY_NAVY": "Malaysia Navy"
+                "MY_NAVY": "Malaysia Navy",
+                "MY_CG": "Malaysia Coast Guard"
             }
             context_str += f"- Your Role: {party_map.get(self.context['party'], self.context['party'])}\n"
 
         if "current_level" in self.context:
             context_str += f"- Escalation Level: {self.context['current_level']}\n"
+
+        # Add simulation parameters if available
+        if "simulation_parameters" in self.context:
+            context_str += "\n**AVAILABLE SIMULATION PARAMETERS** (use these in your recommendations):\n"
+            params = self.context["simulation_parameters"]
+            for param_name, param_info in params.items():
+                if isinstance(param_info, dict):
+                    # Formatted parameter with range/options
+                    context_str += f"  - {param_name}: {param_info.get('label', param_name)}\n"
+                    if 'range' in param_info:
+                        context_str += f"    Range: {param_info['range']}\n"
+                    elif 'options' in param_info:
+                        context_str += f"    Options: {', '.join(param_info['options'])}\n"
+                else:
+                    # Simple parameter
+                    context_str += f"  - {param_name}: {param_info}\n"
+
+        # Add available strategic actions if provided
+        if "strategic_actions" in self.context:
+            context_str += "\n**AVAILABLE STRATEGIC ACTIONS** (players can execute these):\n"
+            actions = self.context["strategic_actions"]
+            if isinstance(actions, list):
+                for action in actions:
+                    if isinstance(action, dict):
+                        context_str += f"  - {action.get('name', 'Unknown')}"
+                        if 'prerequisites' in action:
+                            context_str += f" (prerequisites: {action['prerequisites']})"
+                        context_str += "\n"
+                    else:
+                        context_str += f"  - {action}\n"
+            else:
+                context_str += f"  {actions}\n"
 
         context_str += f"\nUser question: {question}"
 
