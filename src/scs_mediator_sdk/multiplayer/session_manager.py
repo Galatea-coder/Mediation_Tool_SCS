@@ -70,6 +70,7 @@ class Session:
     proposals: List[Proposal] = field(default_factory=list)
     responses: Dict[str, List[Response]] = field(default_factory=dict)
     simulation_results: Optional[Dict[str, Any]] = None
+    strategic_contexts: Dict[str, Any] = field(default_factory=dict)  # player_id -> StrategicContext
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
 
