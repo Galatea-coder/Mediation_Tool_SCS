@@ -141,7 +141,7 @@ class AIGuide:
 
         response = client.messages.create(
             model="claude-3-opus-20240229",
-            max_tokens=2048,
+            max_tokens=8192,  # Increased from 2048 to allow full academic responses with citations
             system=system_prompt,
             messages=messages
         )

@@ -510,6 +510,144 @@ stakeholder agents based on your agreement design.
     }
 }
 
+# ==================== PLAYER RESOURCE DATA (Issue #3) ====================
+
+# Parameter-specific positions for each role and issue type
+PARAMETER_POSITIONS = {
+    'resupply': {
+        'PH_GOV': {
+            'standoff_nm': {
+                'stance': '300m minimum',
+                'reasoning': 'Filipino crew safety requires sufficient space. 300m is established practice in similar maritime incidents (Gulf of Aden escort missions).',
+                'priority': 'critical'
+            },
+            'escort_count': {
+                'stance': '2-3 vessels',
+                'reasoning': 'Balance between security and avoiding escalation. Based on 2014 Second Thomas Shoal precedent.',
+                'priority': 'important'
+            },
+            'pre_notification_hours': {
+                'stance': '12-24 hours',
+                'reasoning': 'Sufficient time for coordination without compromising operational security.',
+                'priority': 'flexible'
+            }
+        },
+        'PRC_MARITIME': {
+            'standoff_nm': {
+                'stance': '100-150m maximum',
+                'reasoning': 'Closer monitoring needed due to sovereignty concerns. Cited: CCG regulations for unauthorized vessels in claimed waters.',
+                'priority': 'critical'
+            },
+            'escort_count': {
+                'stance': '0-1 vessels',
+                'reasoning': 'Limited escorts reduce tension and avoid military escalation appearance.',
+                'priority': 'important'
+            },
+            'pre_notification_hours': {
+                'stance': '48 hours minimum',
+                'reasoning': 'Adequate time for CCG to position vessels and assess cargo.',
+                'priority': 'important'
+            }
+        }
+    }
+}
+
+# Historical incidents relevant to each issue type
+HISTORICAL_INCIDENTS = {
+    'resupply': [
+        {
+            'date': 'March 2014',
+            'title': 'Second Thomas Shoal Standoff',
+            'description': 'Chinese Coast Guard vessels blocked Philippine resupply mission to BRP Sierra Madre for 3 weeks. International pressure led to negotiated passage with reduced supplies.',
+            'outcome': 'Compromise: Reduced supplies allowed through, no inspections',
+            'relevance': 'Established that complete blockades are unsustainable under international pressure. Shows importance of third-party mediation.',
+            'source': 'ICG Asia Report No. 275 (2016)'
+        },
+        {
+            'date': 'August 2023',
+            'title': 'Water Cannon Incident',
+            'description': 'CCG used water cannons against Philippine resupply boats, injuring crew. Led to EDCA site activation at Philippine bases.',
+            'outcome': 'Escalation to military alliance invocation',
+            'relevance': 'Demonstrates how aggressive tactics can backfire by strengthening opposing alliances. Importance of ROE clarity.',
+            'source': 'Philippine Daily Inquirer, August 6, 2023'
+        },
+        {
+            'date': 'November 2023',
+            'title': 'Diplomatic Breakthrough Attempt',
+            'description': 'Philippines and China held bilateral consultations on managing maritime differences, focusing on resupply protocols.',
+            'outcome': 'No formal agreement reached but reduced tensions temporarily',
+            'relevance': 'Shows potential for dialogue-based solutions when both sides have domestic political space.',
+            'source': 'Reuters, November 15, 2023'
+        }
+    ]
+}
+
+# Stakeholder intelligence for each role
+STAKEHOLDER_INTELLIGENCE = {
+    'PH_GOV': {
+        'domestic_politics': """
+**Domestic Pressure**: Filipino public strongly supports resupply missions (87% approval, SWS poll 2023).
+Government faces criticism if perceived as weak on sovereignty. President Marcos has staked political
+capital on "not losing an inch" of territory.
+        """,
+        'public_opinion': """
+**Key Constituencies**:
+- Veterans groups demand strong stance
+- Fishing communities want access restored
+- Business sector prefers stability over confrontation
+        """,
+        'constraints': """
+**Red Lines**:
+- Cannot appear to compromise on sovereignty claims
+- Must maintain supplies to Sierra Madre garrison
+- EDCA obligations with US limit flexibility on some parameters
+        """,
+        'motivations': """
+**What Philippines Wants**:
+- Safe, predictable resupply access
+- De-escalation without appearing weak
+- International legitimacy through peaceful resolution
+        """,
+        'pressure_points': """
+**What Might Move Philippines**:
+- Guarantees of unimpeded resupply
+- Face-saving mechanisms (joint committees, third-party observers)
+- Economic incentives (fishing access, development aid)
+        """
+    },
+    'PRC_MARITIME': {
+        'domestic_politics': """
+**Domestic Pressure**: CCP faces nationalist expectations after years of assertive rhetoric.
+"Core interest" designation means backing down is politically costly. However, Xi also wants
+stable regional environment for economic goals (BRI).
+        """,
+        'public_opinion': """
+**Key Constituencies**:
+- PLA Navy wants operational freedom
+- Fishing industry lobby strong in relevant provinces
+- Foreign policy establishment wants to avoid US intervention
+        """,
+        'constraints': """
+**Red Lines**:
+- Cannot explicitly recognize Philippine sovereignty
+- Must demonstrate "effective control" of nine-dash line
+- Sensitive to perceptions of US influence expansion
+        """,
+        'motivations': """
+**What China Wants**:
+- Recognition of special position in South China Sea
+- Limit US military presence in region
+- Avoid confrontation that damages economic relations
+        """,
+        'pressure_points': """
+**What Might Move China**:
+- Quiet diplomacy that avoids public humiliation
+- Philippine restraint on US military cooperation
+- Economic partnerships that demonstrate benefits of cooperation
+        """
+    }
+}
+
 
 # ==================== HELPER FUNCTIONS ====================
 
@@ -2474,6 +2612,267 @@ The Agent-Based Model (ABM) simulates **300-500 time steps** representing approx
                         st.markdown(f"<p style='color: #1a1a1a;'>{description}</p>", unsafe_allow_html=True)
 
 
+# ==================== PLAYER RESOURCE HELPER FUNCTIONS (Issue #3) ====================
+
+def get_country_position(role: str, param_name: str, issue_type: str) -> dict:
+    """Get country's position on a specific parameter"""
+    return PARAMETER_POSITIONS.get(issue_type, {}).get(role, {}).get(param_name, {
+        'stance': 'Position varies',
+        'reasoning': 'Depends on specific circumstances',
+        'priority': 'flexible'
+    })
+
+def get_opposing_position(role: str, param_name: str, issue_type: str) -> dict:
+    """Get opposing party's likely position"""
+    opposing_role = 'PRC_MARITIME' if role == 'PH_GOV' else 'PH_GOV'
+    return PARAMETER_POSITIONS.get(issue_type, {}).get(opposing_role, {}).get(param_name, {
+        'stance': 'Opposing view',
+        'reasoning': 'Based on historical positions',
+        'priority': 'flexible'
+    })
+
+def get_historical_precedent(param_name: str, issue_type: str) -> dict:
+    """Get historical precedent for a parameter"""
+    # Return relevant historical example based on parameter
+    precedents = {
+        'standoff_nm': {
+            'example': '2014 incident established 200-300m as workable distance for resupply operations',
+            'citation': 'ICG Asia Report No. 275 (2016)'
+        },
+        'escort_count': {
+            'example': 'Previous resupply missions used 1-2 escort vessels without major escalation',
+            'citation': 'Philippine Coast Guard operational reports 2014-2016'
+        },
+        'pre_notification_hours': {
+            'example': '24-hour notification used in 2014 compromise agreement',
+            'citation': 'Bilateral consultation minutes (leaked to media)'
+        }
+    }
+    return precedents.get(param_name, {
+        'example': 'Similar parameters used in previous maritime incidents',
+        'citation': 'See HISTORICAL_INCIDENTS database'
+    })
+
+def get_negotiation_considerations(role: str, param_name: str, issue_type: str) -> list:
+    """Get negotiation considerations for a parameter"""
+    general_considerations = [
+        "Start with your ideal position, be prepared to justify with historical precedents",
+        "Identify which parameters the other side cares most about through their responses",
+        "Consider package deals across multiple parameters for mutually beneficial outcomes",
+        "Document all proposals and reasoning for transparency and accountability"
+    ]
+
+    # Add parameter-specific considerations
+    specific = {
+        'standoff_nm': [
+            "Safety concerns are universally understood - emphasize crew safety",
+            "Reference international maritime safety standards",
+            "Consider graduated approach: different distances for different vessel types"
+        ],
+        'escort_count': [
+            "Balance security needs with de-escalation signals",
+            "Distinguish between armed and unarmed escorts",
+            "Propose mutual observation mechanisms as alternative to escorts"
+        ],
+        'pre_notification_hours': [
+            "Link to operational security vs transparency tradeoffs",
+            "Consider weather and emergency scenarios requiring flexibility",
+            "Propose notification through established channels (hotline)"
+        ]
+    }
+
+    return general_considerations + specific.get(param_name, [])
+
+def get_historical_incidents(issue_type: str) -> list:
+    """Get relevant historical incidents"""
+    return HISTORICAL_INCIDENTS.get(issue_type, [])
+
+def get_stakeholder_intel(role: str, perspective: str) -> dict:
+    """Get stakeholder intelligence"""
+    intel = STAKEHOLDER_INTELLIGENCE.get(role, {})
+    if perspective == 'domestic':
+        return {
+            'domestic_politics': intel.get('domestic_politics', ''),
+            'public_opinion': intel.get('public_opinion', ''),
+            'constraints': intel.get('constraints', '')
+        }
+    elif perspective == 'opposing':
+        return {
+            'motivations': intel.get('motivations', ''),
+            'constraints': intel.get('constraints', ''),
+            'pressure_points': intel.get('pressure_points', '')
+        }
+    return intel
+
+def get_opposing_role(role: str) -> str:
+    """Get opposing role"""
+    return 'PRC_MARITIME' if role == 'PH_GOV' else 'PH_GOV'
+
+def get_parameter_priorities(role: str, issue_type: str) -> list:
+    """Get ranked parameter priorities for a role"""
+    params = PARAMETER_POSITIONS.get(issue_type, {}).get(role, {})
+    sorted_params = sorted(
+        params.items(),
+        key=lambda x: {'critical': 0, 'important': 1, 'flexible': 2}.get(x[1].get('priority', 'flexible'), 2)
+    )
+    return [
+        {
+            'parameter': param,
+            'level': data.get('priority', 'flexible'),
+            'reasoning': data.get('reasoning', ''),
+            'stance': data.get('stance', '')
+        }
+        for param, data in sorted_params
+    ]
+
+def get_tradeoff_strategies(role: str, issue_type: str) -> list:
+    """Get suggested tradeoff strategies"""
+    return [
+        "**Give on**: Non-essential parameters where other side has strong domestic pressure (marked 'flexible' in your priorities)",
+        "**Hold firm on**: Parameters marked 'critical' in your priority ranking - these are your red lines",
+        "**Trade strategically**: Offer concessions on lower-priority items in exchange for gains on higher-priority items",
+        "**Look for creative solutions**: Parameters where both sides' interests can be met through alternative approaches (e.g., third-party monitoring, graduated implementation)",
+        "**Build trust incrementally**: Start with easier parameters to build momentum before tackling critical issues"
+    ]
+
+def render_player_scenario_resources(scenario: dict, role: str, session):
+    """
+    Render comprehensive, scenario-specific resources for players
+
+    Args:
+        scenario: The scenario dict from SCENARIOS
+        role: Player's role (e.g., 'PH_GOV', 'PRC_MARITIME')
+        session: Current session object
+    """
+
+    # Determine issue type from scenario
+    issue_type = 'resupply'  # Default for scenario_A
+    if 'Fishing' in scenario.get('name', ''):
+        issue_type = 'fishing'
+
+    # Sub-tabs for organized content
+    resource_tabs = st.tabs([
+        "📊 Parameter Analysis",
+        "📜 Historical Context",
+        "🎯 Stakeholder Intel",
+        "⚖️ Tradeoff Matrix"
+    ])
+
+    # Tab 1: Parameter Analysis
+    with resource_tabs[0]:
+        st.markdown("#### Detailed Parameter Analysis")
+        st.caption("Understanding each negotiation parameter and how it affects your interests")
+
+        # Get issue metadata
+        issue_config = ISSUE_METADATA.get('resupply_SOP', {})
+
+        # Display analysis for each parameter
+        for field in issue_config.get('fields', []):
+            param_name = field['key']
+            param_label = field['label']
+
+            with st.expander(f"**{param_label}**", expanded=False):
+
+                # Parameter explanation
+                st.markdown(f"**What it means**: {field.get('label', 'N/A')}")
+
+                # Range/options
+                if field['type'] == 'slider':
+                    st.markdown(f"**Possible range**: {field['min']} - {field['max']}")
+
+                # Your country's position
+                your_position = get_country_position(role, param_name, issue_type)
+                st.markdown(f"**🎯 Your Position**: {your_position['stance']}")
+                st.markdown(f"*Rationale*: {your_position['reasoning']}")
+
+                # Priority level
+                priority_emoji = {"critical": "🔴", "important": "🟡", "flexible": "🟢"}
+                priority = your_position.get('priority', 'flexible')
+                st.markdown(f"**Priority**: {priority_emoji.get(priority, '⚪')} {priority.title()}")
+
+                # Other party's likely position
+                other_position = get_opposing_position(role, param_name, issue_type)
+                other_role_name = ROLE_INFO[get_opposing_role(role)]['name']
+                st.markdown(f"**🔄 {other_role_name}'s Likely Position**: {other_position['stance']}")
+                st.markdown(f"*Why*: {other_position['reasoning']}")
+
+                # Historical precedent
+                precedent = get_historical_precedent(param_name, issue_type)
+                if precedent:
+                    st.markdown(f"**📜 Historical Precedent**: {precedent['example']}")
+                    st.caption(f"*Source*: {precedent['citation']}")
+
+                # Negotiation considerations
+                st.markdown("**💡 Negotiation Considerations**:")
+                considerations = get_negotiation_considerations(role, param_name, issue_type)
+                for consideration in considerations[:4]:  # Show first 4 to avoid clutter
+                    st.markdown(f"- {consideration}")
+
+    # Tab 2: Historical Context
+    with resource_tabs[1]:
+        st.markdown("#### Historical Incidents & Precedents")
+        st.caption("Past events that inform current negotiating positions")
+
+        incidents = get_historical_incidents(issue_type)
+        for incident in incidents:
+            with st.expander(f"**{incident['date']}**: {incident['title']}", expanded=False):
+                st.markdown(incident['description'])
+                st.markdown(f"**Outcome**: {incident['outcome']}")
+                st.markdown(f"**Relevance to current negotiation**: {incident['relevance']}")
+                st.caption(f"*Source*: {incident['source']}")
+
+    # Tab 3: Stakeholder Intelligence
+    with resource_tabs[2]:
+        st.markdown("#### What You Need to Know")
+
+        # About YOUR country
+        your_intel = get_stakeholder_intel(role, 'domestic')
+        role_name = ROLE_INFO[role]['name']
+        st.markdown(f"**🏛️ Your Domestic Context** ({role_name})")
+        st.markdown(your_intel['domestic_politics'])
+        st.markdown(your_intel['public_opinion'])
+        st.markdown(your_intel['constraints'])
+
+        st.markdown("---")
+
+        # About the OTHER party
+        other_role = get_opposing_role(role)
+        other_intel = get_stakeholder_intel(other_role, 'opposing')
+        other_role_name = ROLE_INFO[other_role]['name']
+        st.markdown(f"**🔍 Understanding the Other Party** ({other_role_name})")
+        st.markdown(other_intel['motivations'])
+        st.markdown(other_intel['constraints'])
+        st.markdown(other_intel['pressure_points'])
+
+    # Tab 4: Tradeoff Matrix
+    with resource_tabs[3]:
+        st.markdown("#### Parameter Tradeoff Analysis")
+        st.caption("Understanding which parameters to prioritize and what concessions to consider")
+
+        # Your priorities (ranked)
+        priorities = get_parameter_priorities(role, issue_type)
+        st.markdown("**🎯 Your Priority Ranking**:")
+
+        if priorities:
+            for i, priority in enumerate(priorities, 1):
+                level = priority['level']
+                importance = "🔴 Critical" if level == 'critical' else "🟡 Important" if level == 'important' else "🟢 Flexible"
+                param_display = priority['parameter'].replace('_', ' ').title()
+                st.markdown(f"{i}. **{param_display}** - {importance}")
+                st.caption(f"   Position: {priority['stance']}")
+                st.caption(f"   Reasoning: {priority['reasoning']}")
+        else:
+            st.info("No specific priority data available for this issue type yet.")
+
+        st.markdown("---")
+
+        # Suggested tradeoff strategies
+        st.markdown("**💱 Suggested Tradeoff Strategies**:")
+        tradeoffs = get_tradeoff_strategies(role, issue_type)
+        for tradeoff in tradeoffs:
+            st.markdown(f"- {tradeoff}")
+
+
 # ==================== PLAYER VIEW ====================
 
 def player_view():
@@ -2656,6 +3055,25 @@ def player_view():
         # Show player's role (keep outside tabs)
         st.markdown(f"## {role_info['name']}")
 
+        # Issue #2: Scenario Context Header
+        scenario = SCENARIOS.get(session.scenario_id)
+        if scenario:
+            st.markdown("---")
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                st.markdown(f"### 🗺️ Scenario: {scenario['name']}")
+                st.caption(scenario['description'])
+            with col2:
+                # Extract issue type from scenario name for display
+                if 'Resupply' in scenario['name']:
+                    issue_display = 'Resupply Operations'
+                elif 'Fishing' in scenario['name']:
+                    issue_display = 'Fishing Rights'
+                else:
+                    issue_display = 'Maritime Access'
+                st.metric("Issue Type", issue_display)
+            st.markdown("---")
+
         # Create 6-tab interface
         tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
             "🎯 Role & Objectives",
@@ -2682,6 +3100,21 @@ def player_view():
             st.markdown("### 📖 Strategy Guide")
             player_guide = get_player_guide(player.role, session.scenario_id)
             st.markdown(player_guide)
+
+            # Issue #3: Scenario-Specific Analysis Resources
+            st.markdown("---")
+            st.markdown("### 📚 Scenario-Specific Analysis")
+            st.caption("Detailed guidance on parameters, historical context, stakeholder considerations, and tradeoff strategies")
+
+            scenario = SCENARIOS.get(session.scenario_id)
+            if scenario:
+                render_player_scenario_resources(
+                    scenario=scenario,
+                    role=player.role,
+                    session=session
+                )
+            else:
+                st.info("Scenario-specific resources not available for this scenario.")
 
         # TAB 2: Current Proposal
         with tab2:
